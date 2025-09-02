@@ -24,12 +24,14 @@ app.use(express.urlencoded({ extended: false }));
 
 // Routers
 // const indexRouter = require("./routes/index");
-// const userRouter = require("./routes/user");
-
+const userRouter = require("./routes/user");
+const exerciseRouter = require("./routes/exercise");
+const sessionRouter = require("./routes/session");
 
 // app.use("/", indexRouter);
-// app.use("/user", userRouter);
-
+app.use("/user", userRouter);
+app.use("/exercise", exerciseRouter);
+app.use("/session", sessionRouter);
 
 // Fallback error route
 app.get(/.*/, (req, res, next) => {
