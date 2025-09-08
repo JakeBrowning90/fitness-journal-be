@@ -7,8 +7,8 @@ const cors = require("cors");
 
 //expressSession
 //passport
-// require("./middleware/passport");
-// const passport = require("passport");
+require("./middleware/passport");
+const passport = require("passport");
 // const LocalStrategy = require("passport-local").Strategy;
 //jwt
 
@@ -16,7 +16,7 @@ const app = express();
 app.use(cors());
 
 // Passport to routes
-// app.use(passport.initialize());
+app.use(passport.initialize());
 
 // Parse form payloads and sets to req.body
 app.use(express.json());

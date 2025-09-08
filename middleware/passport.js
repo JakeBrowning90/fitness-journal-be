@@ -9,7 +9,6 @@ passport.use(
     try {
       const user = await prisma.user.findUnique({
         where: { username: username },
-        include: { opportunity: { select: { id: true, title: true } } },
       });
       if (!user) {
         return done(null, false, { message: "Incorrect username" });

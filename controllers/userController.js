@@ -86,3 +86,23 @@ exports.delete_user = asyncHandler(async (req, res, next) => {
   });
   res.json("User deleted");
 });
+
+exports.user_login = asyncHandler(async (req, res, next) => {
+  jwt.sign(
+    { user: req.user },
+    process.env.SECRET_KEY,
+    { expiresIn: "15m" },
+    (err, token) => {
+      res.json({
+        username: req.user.username,
+        id: req.user.id,
+        // Add "Bearer" on frontend
+        token: token,
+      });
+    }
+  );
+});
+
+exports.token_check = asyncHandler(async (req, res, next) => {
+  res.status(200);
+});
