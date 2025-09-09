@@ -3,7 +3,6 @@ const {
   validateUserCreate,
   validateUserUpdate,
 } = require("../middleware/validateUser");
-// const validateUserUpdate = require("../middleware/validateUserUpdate");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 // Import Prisma
