@@ -9,11 +9,12 @@ const exerciseController = require("../controllers/exerciseController");
 
 router.post('/', exerciseController.create_exercise)
 
-router.get('/', exerciseController.read_exercise)
+router.get('/:id', exerciseController.read_exercise)
 
-router.put('/', exerciseController.update_exercise)
+router.get('/', exerciseController.read_exercise_many)
 
-router.delete('/', exerciseController.delete_exercise)
+router.put('/:id', exerciseController.update_exercise)
 
+router.delete('/:id', exerciseController.delete_exercise)
 
 module.exports = router;
