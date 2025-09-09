@@ -1,5 +1,8 @@
 const asyncHandler = require("express-async-handler");
-
+const {
+  validateExerciseCreate,
+  validateExerciseUpdate,
+} = require("../middleware/validateExercise");
 // exports.function_name = asyncHandler(async(req, res, next) => {
 
 // })

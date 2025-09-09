@@ -2,7 +2,7 @@ const { body } = require("express-validator");
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
-const validateUserCreate = [
+const validateExerciseCreate = [
   body("username")
     .trim()
     .isLength({ min: 1, max: 50 })
@@ -29,7 +29,7 @@ const validateUserCreate = [
     .withMessage("Typed passwords do not match."),
 ];
 
-const validateUserUpdate = [
+const validateExerciseUpdate = [
   body("username")
     .trim()
     .isLength({ min: 1, max: 50 })
@@ -56,4 +56,4 @@ const validateUserUpdate = [
     .withMessage("Typed passwords do not match."),
 ];
 
-module.exports = { validateUserCreate, validateUserUpdate };
+module.exports = { validateExerciseCreate, validateExerciseUpdate };

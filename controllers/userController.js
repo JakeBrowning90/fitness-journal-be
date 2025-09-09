@@ -1,6 +1,9 @@
 const asyncHandler = require("express-async-handler");
-const validateUser = require("../middleware/validateUser");
-const validateUserUpdate = require("../middleware/validateUserUpdate");
+const {
+  validateUserCreate,
+  validateUserUpdate,
+} = require("../middleware/validateUser");
+// const validateUserUpdate = require("../middleware/validateUserUpdate");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 // Import Prisma
@@ -12,7 +15,7 @@ const prisma = new PrismaClient();
 // })
 
 exports.create_user = [
-  validateUser,
+  validateUserCreate,
   asyncHandler(async (req, res, next) => {
     // Send Error messages if validation fails
     const errors = validationResult(req);
