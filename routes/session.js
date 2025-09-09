@@ -7,13 +7,14 @@ const sessionController = require("../controllers/sessionController");
 // Routes
 // router.post/get/put/delete('/', xController.function_name)
 
-router.post('/', sessionController.create_session)
+router.post("/", sessionController.create_session);
 
-router.get('/', sessionController.read_session)
+router.get("/:id", sessionController.read_session);
 
-router.put('/', sessionController.update_session)
+router.get("/", sessionController.read_session_many);
 
-router.delete('/', sessionController.delete_session)
+router.put("/:id", sessionController.update_session);
 
+router.delete("/:id", sessionController.delete_session);
 
 module.exports = router;
