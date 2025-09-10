@@ -40,6 +40,18 @@ exports.read_session = asyncHandler(async (req, res, next) => {
     where: {
       id: parseInt(req.params.id),
     },
+    include: {
+      user: {
+        select: {
+          username: true,
+        },
+      },
+      exercise: {
+        select: {
+          name: true,
+        },
+      },
+    },
   });
   res.json(session);
 });
@@ -70,10 +82,33 @@ exports.read_session_many = asyncHandler(async (req, res, next) => {
 exports.update_session = [
   validateSessionUpdate,
   asyncHandler(async (req, res, next) => {
-    res.json("Update session");
+    // Send Error messages if validation fails
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.json(errors);
+    } else {
+      await prisma.session.update({
+        where: { id: parseInt(req.params.id) },
+        data: {
+          user: { connect: { id: parseInt(req.body.user) } },
+          exercise: { connect: { id: parseInt(req.body.exercise) } },
+          date: req.body.date,
+          durationmin: parseInt(req.body.durationmin),
+          distancek: parseInt(req.body.distancek),
+          notes: req.body.notes,
+        },
+      });
+      res.json("Updated session");
+    }
   }),
 ];
 
 exports.delete_session = asyncHandler(async (req, res, next) => {
-  res.json("Delete session");
+  // To-do: Error messages
+  await prisma.session.delete({
+    where: {
+      id: parseInt(req.params.id),
+    },
+  });
+  res.json("Session deleted");
 });
