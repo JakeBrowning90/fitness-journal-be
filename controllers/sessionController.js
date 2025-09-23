@@ -79,6 +79,36 @@ exports.read_session_many = asyncHandler(async (req, res, next) => {
   res.json(allSessions);
 });
 
+exports.populate_home = asyncHandler(async (req, res, next) => {
+  const allSessions = await prisma.session.findMany({
+    include: {
+      user: {
+        select: {
+          username: true,
+        },
+      },
+      exercise: {
+        select: {
+          name: true,
+        },
+      },
+    },
+    orderBy: [
+      {
+        id: "asc",
+      },
+    ],
+  });
+  const allExercises = await prisma.exercise.findMany({
+    orderBy: [
+      {
+        id: "asc",
+      },
+    ],
+  });
+  res.json([allSessions, allExercises]);
+});
+
 exports.update_session = [
   validateSessionUpdate,
   asyncHandler(async (req, res, next) => {
