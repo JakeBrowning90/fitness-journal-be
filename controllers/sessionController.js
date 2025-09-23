@@ -20,13 +20,15 @@ exports.create_session = [
     if (!errors.isEmpty()) {
       res.json(errors);
     } else {
+      console.log(req.body),
+
       await prisma.session.create({
         data: {
           user: { connect: { id: parseInt(req.body.user) } },
           exercise: { connect: { id: parseInt(req.body.exercise) } },
           date: req.body.date,
           durationmin: parseInt(req.body.durationmin),
-          distancek: parseInt(req.body.distancek),
+          distancek: parseFloat(req.body.distancek),
           notes: req.body.notes,
         },
       });
@@ -102,7 +104,7 @@ exports.populate_home = asyncHandler(async (req, res, next) => {
   const allExercises = await prisma.exercise.findMany({
     orderBy: [
       {
-        id: "asc",
+        name: "asc",
       },
     ],
   });

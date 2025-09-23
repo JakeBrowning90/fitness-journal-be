@@ -9,11 +9,11 @@ const sessionController = require("../controllers/sessionController");
 
 router.post("/", sessionController.create_session);
 
-router.get("/:id", sessionController.read_session);
-
 router.get("/", sessionController.read_session_many);
 
 router.get("/home", sessionController.populate_home);
+
+router.get("/:id", sessionController.read_session);
 
 router.put("/:id", sessionController.update_session);
 

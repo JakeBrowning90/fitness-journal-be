@@ -29,7 +29,7 @@ model Exercise {
 
 model Session {
   id Int @id @default(autoincrement())
-  date DateTime
+  date DateTime @db.Date
   durationmin Int?
   distancek Float?
   notes String?
