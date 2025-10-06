@@ -21,17 +21,16 @@ exports.create_session = [
       res.json(errors);
     } else {
       console.log(req.body),
-
-      await prisma.session.create({
-        data: {
-          user: { connect: { id: parseInt(req.body.user) } },
-          exercise: { connect: { id: parseInt(req.body.exercise) } },
-          date: req.body.date,
-          durationmin: parseInt(req.body.durationmin),
-          distancek: parseFloat(req.body.distancek),
-          notes: req.body.notes,
-        },
-      });
+        await prisma.session.create({
+          data: {
+            user: { connect: { id: parseInt(req.body.user) } },
+            exercise: { connect: { id: parseInt(req.body.exercise) } },
+            date: req.body.date,
+            durationmin: parseInt(req.body.duration),
+            distancek: parseFloat(req.body.distance),
+            notes: req.body.notes,
+          },
+        });
       res.json("Created session");
     }
   }),
@@ -97,7 +96,7 @@ exports.populate_home = asyncHandler(async (req, res, next) => {
     },
     orderBy: [
       {
-        id: "asc",
+        date: "asc",
       },
     ],
   });
@@ -108,6 +107,7 @@ exports.populate_home = asyncHandler(async (req, res, next) => {
       },
     ],
   });
+  console.log(allSessions);
   res.json([allSessions, allExercises]);
 });
 
