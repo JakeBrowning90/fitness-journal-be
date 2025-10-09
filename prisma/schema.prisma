@@ -29,10 +29,17 @@ model Exercise {
 
 model Session {
   id Int @id @default(autoincrement())
-  date DateTime @db.Date
+  date Date @relation(fields:[dateId], references:[id])
+  dateId Int
   durationmin Int?
   distancek Float?
   notes String?
   user User[]
   exercise Exercise[]
+}
+
+model Date {
+  id Int @id @default(autoincrement())
+  date DateTime @db.Date @unique
+  session Session[]
 }

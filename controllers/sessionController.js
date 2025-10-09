@@ -25,7 +25,7 @@ exports.create_session = [
           data: {
             user: { connect: { id: parseInt(req.body.user) } },
             exercise: { connect: { id: parseInt(req.body.exercise) } },
-            date: req.body.date,
+            date: { connect: { id: parseInt(req.body.date) } },
             durationmin: parseInt(req.body.duration),
             distancek: parseFloat(req.body.distance),
             notes: req.body.notes,

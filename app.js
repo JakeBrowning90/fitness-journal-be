@@ -27,11 +27,13 @@ app.use(express.urlencoded({ extended: false }));
 const userRouter = require("./routes/user");
 const exerciseRouter = require("./routes/exercise");
 const sessionRouter = require("./routes/session");
+const dateRouter = require("./routes/date");
 
 // app.use("/", indexRouter);
 app.use("/user", userRouter);
 app.use("/exercise", exerciseRouter);
 app.use("/session", sessionRouter);
+app.use("/date", dateRouter);
 
 // Fallback error route
 app.get(/.*/, (req, res, next) => {
