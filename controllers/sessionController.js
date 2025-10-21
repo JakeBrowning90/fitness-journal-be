@@ -20,17 +20,28 @@ exports.create_session = [
     if (!errors.isEmpty()) {
       res.json(errors);
     } else {
-      console.log(req.body),
-        await prisma.session.create({
-          data: {
-            user: { connect: { id: parseInt(req.body.user) } },
-            exercise: { connect: { id: parseInt(req.body.exercise) } },
-            date: { connect: { id: parseInt(req.body.date) } },
-            durationmin: parseInt(req.body.duration),
-            distancek: parseFloat(req.body.distance),
-            notes: req.body.notes,
+      // Check if date is already saved, create if missing
+      console.log(req.body);
+      console.log(typeof req.body.user);
+      await prisma.session.create({
+        data: {
+          date: {
+            connectOrCreate: {
+              where: {
+                date: req.body.date,
+              },
+              create: {
+                date: req.body.date,
+              },
+            },
           },
-        });
+          user: { connect: { id: parseInt(req.body.user) } },
+          exercise: { connect: { id: parseInt(req.body.exercise) } },
+          durationmin: parseInt(req.body.duration),
+          distancek: parseFloat(req.body.distance),
+          notes: req.body.notes,
+        },
+      });
       res.json("Created session");
     }
   }),

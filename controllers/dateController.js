@@ -41,6 +41,40 @@ exports.read_date_many = asyncHandler(async (req, res, next) => {
   res.json(allDates);
 });
 
+exports.populate_home = asyncHandler(async (req, res, next) => {
+  const allDates = await prisma.date.findMany({
+    orderBy: [
+      {
+        date: "asc",
+      },
+    ],
+    include: {
+      session: {
+        select: {
+          id: true,
+          exercise: {
+            select: {
+              name: true,
+            },
+          },
+          distancek: true,
+          durationmin: true,
+          notes: true,
+        },
+      },
+    },
+  });
+  const allExercises = await prisma.exercise.findMany({
+    orderBy: [
+      {
+        name: "asc",
+      },
+    ],
+  });
+  console.log(allDates);
+  res.json([allDates, allExercises]);
+});
+
 exports.read_date = asyncHandler(async (req, res, next) => {
   const date = await prisma.date.findUnique({
     where: {
@@ -52,4 +86,12 @@ exports.read_date = asyncHandler(async (req, res, next) => {
 
 exports.update_date = asyncHandler(async (req, res, next) => {});
 
-exports.delete_date = asyncHandler(async (req, res, next) => {});
+exports.delete_date = asyncHandler(async (req, res, next) => {
+  // TODO: Delete connected sessions
+  await prisma.date.delete({
+    where: {
+      id: parseInt(req.params.id),
+    },
+  });
+  res.json("Date deleted")
+});

@@ -7,6 +7,7 @@
 generator client {
   provider = "prisma-client-js"
   output   = "../node_modules/.prisma/client"
+  previewFeatures = ["nativeTypes"]
 }
 
 datasource db {
@@ -29,8 +30,7 @@ model Exercise {
 
 model Session {
   id Int @id @default(autoincrement())
-  date Date @relation(fields:[dateId], references:[id])
-  dateId Int
+  date Date[]
   durationmin Int?
   distancek Float?
   notes String?
@@ -40,6 +40,6 @@ model Session {
 
 model Date {
   id Int @id @default(autoincrement())
-  date DateTime @db.Date @unique
+  date String @unique
   session Session[]
 }

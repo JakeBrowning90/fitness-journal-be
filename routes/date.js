@@ -11,6 +11,8 @@ router.post("/", dateController.create_date);
 
 router.get("/", dateController.read_date_many);
 
+router.get("/home", dateController.populate_home);
+
 router.get("/:id", dateController.read_date);
 
 router.put("/:id", dateController.update_date);
