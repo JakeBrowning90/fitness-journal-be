@@ -63,8 +63,14 @@ exports.read_session = asyncHandler(async (req, res, next) => {
           name: true,
         },
       },
+      date: {
+        select: {
+          date: true,
+        },
+      },
     },
   });
+  console.log(session);
   res.json(session);
 });
 
