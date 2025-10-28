@@ -45,6 +45,7 @@ exports.read_exercise_many = asyncHandler(async (req, res, next) => {
       },
     ],
   });
+  console.log(allExercises);
   res.json(allExercises);
 });
 
