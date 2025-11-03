@@ -136,12 +136,34 @@ exports.update_session = [
     if (!errors.isEmpty()) {
       res.json(errors);
     } else {
+      // Disconnect existing date and exercise
       await prisma.session.update({
         where: { id: parseInt(req.params.id) },
         data: {
+          date: {
+            set: [],
+          },
+          exercise: {
+            set: [],
+          },
+        },
+      });
+      // Update with new data
+      await prisma.session.update({
+        where: { id: parseInt(req.params.id) },
+        data: {
+          date: {
+            connectOrCreate: {
+              where: {
+                date: req.body.date,
+              },
+              create: {
+                date: req.body.date,
+              },
+            },
+          },
           user: { connect: { id: parseInt(req.body.user) } },
           exercise: { connect: { id: parseInt(req.body.exercise) } },
-          date: req.body.date,
           durationmin: parseInt(req.body.durationmin),
           distancek: parseInt(req.body.distancek),
           notes: req.body.notes,
