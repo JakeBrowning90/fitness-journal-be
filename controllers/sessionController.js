@@ -3,6 +3,7 @@ const {
   validateSessionCreate,
   validateSessionUpdate,
 } = require("../middleware/validateSession");
+const dateCleanup = require("../middleware/dateCleanup");
 // Import Prisma
 const { PrismaClient } = require("@prisma/client");
 const { validationResult } = require("express-validator");
@@ -70,7 +71,7 @@ exports.read_session = asyncHandler(async (req, res, next) => {
       },
     },
   });
-  console.log(session);
+  // console.log(session);
   res.json(session);
 });
 
@@ -164,11 +165,14 @@ exports.update_session = [
           },
           user: { connect: { id: parseInt(req.body.user) } },
           exercise: { connect: { id: parseInt(req.body.exercise) } },
-          durationmin: parseInt(req.body.durationmin),
-          distancek: parseInt(req.body.distancek),
+          durationmin: parseInt(req.body.duration),
+          distancek: parseInt(req.body.distance),
           notes: req.body.notes,
         },
       });
+      // dateCleanup(session.date[0].date);
+      dateCleanup();
+
       res.json("Updated session");
     }
   }),
